@@ -1,4 +1,4 @@
-fichier bash utilisé pour réaliser des calculs DFT avec QE.
+fichier bash utilisé pour réaliser des calculs DFT avec QE.(adastra)
 
 # Exemple d'utilisation
 ## Pour calculer E=f((distance entre deux atomes)
