@@ -8,4 +8,6 @@ d=2.5 ;  [submit.sh](https://github.com/hbulou/DFT-cvg/blob/main/submit.sh) --jo
 acell=10.0 ; submit.sh --jobname acell{acell} --cmd "./QE.sh --type atom --celldm ${acell} --nkpt 10 --pp Co.pbe-spn-kjpaw_psl.0.3.1.UPF --wfccutoff 70.0 --ratiorhowfc 10.0 --elt Co --ibrav 1"
 
 ## Analyse des fichiers de sortie
-num=34 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; python HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
+
+ num=17 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
+
