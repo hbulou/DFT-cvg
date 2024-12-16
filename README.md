@@ -34,4 +34,7 @@ pour calculer Ecoh
  pour extraire les data
   num=51 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
 
+  pour afficher Ecoh
   
+  python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 4 --cell 20.0 --ke 100.0 --nkpt 12 --pp Pd_4d8.0_5s2.0_5p0.0.UPF  --degauss 0.01 --ratio 10.0 --plot_cell
+
