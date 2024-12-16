@@ -20,3 +20,6 @@ cvg avec ke
 
 n4d=8.0 ; n5s=2.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
 
+pour récupérer les data
+
+ num=11 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
