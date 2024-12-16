@@ -13,4 +13,10 @@ acell=10.0 ; submit.sh --jobname acell{acell} --cmd "./QE.sh --type atom --celld
 
 ## 16/12/2024
 génèse d'un PP pour Pd 4d8.0 5s2.0 5p0.0
+
 n4d=8.0 ; n5s=2.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
+
+cvg avec ke
+
+n4d=8.0 ; n5s=2.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
+
