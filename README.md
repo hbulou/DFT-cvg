@@ -52,6 +52,8 @@ n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_
 ###   résultats
 Ecoh= -4.016952 eV at a0=4.021747 (r0=2.843804) Pd_4d8.0_5s2.0_5p0.0.UPF
 Ecoh= -3.561141 eV at a0=4.021747 (r0=2.843804) Pd_4d9.0_5s1.0_5p0.0.UPF
+Ecoh= -3.209608 eV at a0=4.021747 (r0=2.843804) Pd_4d10.0_5s0.0_5p0.0.UPF
 
-Ecoh= a * n4d + b --> a=0.455811 et b=-7.66344
+
+Ecoh= a * n4d + b --> a=0.455811 et b=-7.66344 (à partir de n4d=8 et n4d=9)
 Ecoh=-3.89 (exp) --> n4d=8.2785189
