@@ -38,5 +38,20 @@ python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 1 --cell 20.0 --ke 100.0
   
   python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 4 --cell 20.0 --ke 100.0 --nkpt 12 --pp Pd_4d8.0_5s2.0_5p0.0.UPF  --degauss 0.01 --ratio 10.0 --plot_cell
 
+### En cours
+
+n4d=9.0 ; n5s=1.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
+./loop.sh --pp Pd_4d9.0_5s1.0_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
+n4d=10.0 ; n5s=0.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
+./loop.sh --pp Pd_4d10.0_5s0.0_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
+
+n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
+./loop.sh --pp Pd_4d8.278_5s1.722_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
+
+
 ###   résultats
 Ecoh= -4.016952 eV at a0=4.021747 (r0=2.843804) Pd_4d8.0_5s2.0_5p0.0.UPF
+Ecoh= -3.561141 eV at a0=4.021747 (r0=2.843804) Pd_4d9.0_5s1.0_5p0.0.UPF
+
+Ecoh= a * n4d + b --> a=0.455811 et b=-7.66344
+Ecoh=-3.89 (exp) --> n4d=8.2785189
