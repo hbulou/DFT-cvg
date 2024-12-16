@@ -17,8 +17,7 @@ génèse d'un PP pour Pd 4d8.0 5s2.0 5p0.0
 n4d=8.0 ; n5s=2.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
 
 cvg avec ke
-
-n4d=8.0 ; n5s=2.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
+ ./loop.sh --pp  Pd_4d8.0_5s2.0_5p0.0.UPF --ke 100.0 --ratio 10.0 --loop_ke on
 
 pour récupérer les data
 
@@ -27,3 +26,12 @@ pour récupérer les data
 Pour tracer Etot=f(KE)
 
 python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 1 --cell 20.0 --ke 100.0 --nkpt 12 --pp Pd_4d8.0_5s2.0_5p0.0.UPF  --degauss 0.01 --ratio 10.0 --plot_ke
+
+
+pour calculer Ecoh
+ ./loop.sh --pp  Pd_4d8.0_5s2.0_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
+
+ pour extraire les data
+  num=51 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
+
+  
