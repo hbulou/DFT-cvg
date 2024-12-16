@@ -17,7 +17,10 @@ def get_nfo(file):
     degauss=0.0
     i=0
     nkpt=12
+    PWSCF=0
     for line in data:
+        if "PWSCF" in line:
+            PWSCF=1
         if "!    total energy              =" in line:
             etot=float(line.split()[5])
         if "kinetic-energy cutoff     =" in line:
@@ -34,9 +37,10 @@ def get_nfo(file):
             #pp=data[i+1].split("/lus/home/CT9/pcm7459/hbulou/pseudo/")[1]
             pp=data[i+1].split("/")[-1]
         i+=1
-    if ke_cutoff != 0.0:
-        ratio=charge_cutoff/ke_cutoff
-    print(file,natom,latt_param,ke_cutoff,etot,ratio,pp.rstrip(),args.nkpt,degauss)
+    if PWSCF==1:
+        if ke_cutoff != 0.0:
+            ratio=charge_cutoff/ke_cutoff
+        print(file,natom,latt_param,ke_cutoff,etot,ratio,pp.rstrip(),args.nkpt,degauss)
 
 ##########################################################################
 ##########################################################################
