@@ -49,6 +49,8 @@ n4d=10.0 ; n5s=0.0 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_fil
 n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p}"
 ./loop.sh --pp Pd_4d8.278_5s1.722_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
 
+r4d=1.6 ; r5s=2.4 ; r5p=2.4 ; n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p} --r4d ${r4d} --r5s ${r5s} --r5p ${r5p}"
+
 
 
 ###   résultats
