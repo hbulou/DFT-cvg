@@ -33,11 +33,12 @@ python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 1 --cell 20.0 --ke 100.0
  ./loop.sh --pp  Pd_4d8.0_5s2.0_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
 
 ###  pour extraire les data
-  num=200 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
+  num=51 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
+  
 
 ###   pour afficher Ecoh
   
-  python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 4 --cell 20.0 --ke 100.0 --nkpt 12 --pp Pd_4d8.0_5s2.0_5p0.0.UPF  --degauss 0.01 --ratio 10.0 --plot_cell
+  python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 4 --cell 20.0 --ke 100.0 --nkpt 12 --pp Pd_4d8.278_5s1.722_5p0.0_r4d1.6_r5s2.4_r5p2.4.UPF  --degauss 0.01 --ratio 10.0 --plot_cell
 
 ### En cours
 
@@ -50,14 +51,21 @@ n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_
 ./loop.sh --pp Pd_4d8.278_5s1.722_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
 
 r4d=1.6 ; r5s=2.4 ; r5p=2.4 ; n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_4d${n4d}_5s${n5s}_5p${n5p}_r4d${r4d}_r5s${r5s}_r5p${r5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p} --r4d ${r4d} --r5s ${r5s} --r5p ${r5p}"
+
 ./loop.sh --pp Pd_4d8.278_5s1.722_5p0.0_r4d1.6_r5s2.4_r5p2.4.UPF --ke 100.0 --ratio 10.0 --Ecoh on
 
+exc=PBESOL ; r4d=1.6 ; r5s=2.4 ; r5p=2.4 ; n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_filename Pd_${exc}_4d${n4d}_5s${n5s}_5p${n5p}_r4d${r4d}_r5s${r5s}_r5p${r5p}.UPF --n4d ${n4d} --n5s ${n5s} --n5p ${n5p} --r4d ${r4d} --r5s ${r5s} --r5p ${r5p} --exc ${exc}"
+
+./loop.sh --pp Pd_PBESOL_4d8.278_5s1.722_5p0.0_r4d1.6_r5s2.4_r5p2.4.UPF --ke 100.0 --ratio 10.0 --Ecoh on
 
 ###   résultats
 Ecoh= -4.016952 eV at a0=4.021747 (r0=2.843804) Pd_4d8.0_5s2.0_5p0.0.UPF
 Ecoh= -3.882614 eV at a0=4.021747 (r0=2.843804) Pd_4d8.278_5s1.722_5p0.0.UPF
 Ecoh= -3.561141 eV at a0=4.021747 (r0=2.843804) Pd_4d9.0_5s1.0_5p0.0.UPF
 Ecoh= -3.209608 eV at a0=4.021747 (r0=2.843804) Pd_4d10.0_5s0.0_5p0.0.UPF
+Ecoh= -4.724666 eV at a0=3.968829 (r0=2.806386) Pd_PBESOL_4d8.0_5s2.0_5p0.0_r4d1.6_r5s2.4_r5p2.4.UPF
+Ecoh= -4.579386 eV at a0=3.968829 (r0=2.806386) Pd_PBESOL_4d8.278_5s1.722_5p0.0_r4d1.6_r5s2.4_r5p2.4.UPF
+Ecoh= -4.232556 eV at a0=3.974121 (r0=2.810128) Pd_PBESOL_4d9.0_5s1.0_5p0.0_r4d1.6_r5s2.4_r5p2.4.UPF
 
 
 Ecoh= a * n4d + b --> a=0.455811 et b=-7.66344 (à partir de n4d=8 et n4d=9)
