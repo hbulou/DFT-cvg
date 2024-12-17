@@ -50,6 +50,7 @@ n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_
 ./loop.sh --pp Pd_4d8.278_5s1.722_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
 
 
+
 ###   résultats
 Ecoh= -4.016952 eV at a0=4.021747 (r0=2.843804) Pd_4d8.0_5s2.0_5p0.0.UPF
 Ecoh= -3.882614 eV at a0=4.021747 (r0=2.843804) Pd_4d8.278_5s1.722_5p0.0.UPF
