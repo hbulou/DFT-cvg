@@ -11,6 +11,7 @@ acell=10.0 ; submit.sh --jobname acell{acell} --cmd "./QE.sh --type atom --celld
 
  num=17 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
 
+#####################################################################################################################################################################
 ## 16/12/2024
 ### génèse d'un PP pour Pd 4d8.0 5s2.0 5p0.0
 
@@ -32,7 +33,7 @@ python3 ./HB_plot.py --data DFT_cvg_data_Pd.dat --natom 1 --cell 20.0 --ke 100.0
  ./loop.sh --pp  Pd_4d8.0_5s2.0_5p0.0.UPF --ke 100.0 --ratio 10.0 --Ecoh on
 
 ###  pour extraire les data
-  num=51 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
+  num=200 ; liste=`etat_jobs.sh --nday 10 --last $num | tail -2 | head -1` ; ~/python_environment/bin/python ~/scripts/HB_QE_Ananlysis.py --nkpt 12 --slurm $liste
 
 ###   pour afficher Ecoh
   
@@ -51,6 +52,7 @@ n4d=8.278 ; n5s=1.722 ; n5p=0.0 ; submit.sh --jobname pp2 --cmd "gen_PP.sh --pp_
 
 ###   résultats
 Ecoh= -4.016952 eV at a0=4.021747 (r0=2.843804) Pd_4d8.0_5s2.0_5p0.0.UPF
+Ecoh= -3.882614 eV at a0=4.021747 (r0=2.843804) Pd_4d8.278_5s1.722_5p0.0.UPF
 Ecoh= -3.561141 eV at a0=4.021747 (r0=2.843804) Pd_4d9.0_5s1.0_5p0.0.UPF
 Ecoh= -3.209608 eV at a0=4.021747 (r0=2.843804) Pd_4d10.0_5s0.0_5p0.0.UPF
 
