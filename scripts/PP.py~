@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+import numpy
+import pandas
+from matplotlib import pyplot,ticker
+import argparse
+def main(args):
+    filename="ld1.wfc"
+    head=pandas.read_csv(filename,nrows=1,header=None)
+
+    entete=head.values[0][0].split()[1:]
+    exit()
+    print(entete)
+    data=pandas.read_csv(filename,header=0,index_col=False,names=entete, delim_whitespace=True)  #sep=None) #,skiprows=[0],header=None,names=entete)#,header=None,name=[entete])
+    print(data)
+    fig, ax = pyplot.subplots()
+
+
+    print(args.list)
+    if len(args.list)>0:
+        for tag in args.list:
+            ax.plot(data.r,data[tag],label=tag)
+    ax.legend()
+    pyplot.show()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--list'   ,nargs='+')  # nargs='*' if you want to support the ability to have an empty list.
+    args = parser.parse_args()
+    main(args)
+
