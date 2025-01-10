@@ -1,11 +1,52 @@
+* essai
+  - essai2
+
+|    |                            |    exp.              |                     PBE, kjpaw |
+|----|-------------------         |----------------------|--------------------------------|
+| Pd | Latt. param.               |   3.89               |   3.952954 (+1.6 %)            |
+|    | Cohesion energy (eV/atom)  |  -3.89               |  -3.689025 (-5.2 %)            |
+
+
+|  Pd                        |    exp.   |                      |                    |
+|----------------------------|-----------|---                   |-                   |
+| 4d                         |           |  9.5                 | 8.0                |
+| 5s                         |           |  0.5                 | 2.0                |
+| 5p                         |           |  0.0                 | 0.0                |
+| fct                        |           |  PBE                 | PBE                |
+| method                     |           |  kjpaw               | kjpaw              |
+| AE total energy (Ry)       |           |  -10091.748152       | -10091.437760      |
+|  Latt. param.              |   3.89    |   3.952954 (1.62 %)  |  3.952954 (1.62 %) |
+|  Cohesion energy (eV/atom) |  -3.89    |  -3.689268 (-5.16 %) | -3.813408 (-1.97 %)|
+
+
+|  Rh                        |    exp.   |                     |                   |                   |                      |
+|----------------------------|-----------|---                  |-------------------|-------------------|--------------------- |
+| 4d                         |           |  7.0                |8.0                | 9.0               | 9.0                  |
+| 5s                         |           |  2.0                |1.0                | 0.0               | 0.0                  |
+| 5p                         |           |  0.0                |0.0                | 0.0               | 0.0                  |
+| fct                        |           |  PBE                |PBE                | PBE               |   PBESOL             |
+| method                     |           |  kjpaw              |kjpaw              | kjpaw             |  kjpaw               |
+| AE total energy (Ry)       |           |  -9568.054978       | -9568.237171      | -9568.304006      | -9563.523933         |
+|  Latt. param.              |   3.80    |  3.836535 (+1.0 %)  |3.836535  (+1.0 %) | 3.836535 (+1.0 %) | 3.788909 (-0.3 %)    |
+|  Cohesion energy (eV/atom) |  -5.75    |  -6.163543 (+7.2 %) |-6.162021 (+7.6 %)  | -6.150323 (+7.0 %) | -7.007016 (+21.9 %)|
+
+Mismatch (ads-sub)/sub
+|sub\ads (exp) | Pd  |    Rh   |sub\ads (calc)| Pd  |    Rh|                       
+|----|----|----                |---|---    |---|
+|Pd  |     0.0  |  -2.3 %      |Pd | 0.0   |  -2.95 %|
+|Rh   |   +2.4 % | 0.0         |Rh | +3.0 %||
+
+
+
 fichier bash utilisé pour réaliser des calculs DFT avec QE.(adastra - CINES)
 ============================================================================
 
 # Exemple d'utilisation
-## Pour calculer E=f((distance entre deux atomes)
+* ## Pour calculer E=f((distance entre deux atomes)
 d=2.5 ;  [submit.sh](https://github.com/hbulou/DFT-cvg/blob/main/submit.sh) --jobname d${d} --cmd "./[QE.sh](https://github.com/hbulou/DFT-cvg/blob/main/QE.sh) --type molecule --celldm 20.0 --nkpt 10 --pp H.pbe-kjpaw_psl.1.0.0.UPF --wfccutoff 70.0 --ratiorhowfc 10.0 --elt H --ibrav 1  --totcharge 1.0 --runname mol1 --dmol ${d}"
-## Pour un atome seul
-### en fonction de la taille de la cellule
+---------------------------
+ * **Pour un atome seul:**
+  - **en fonction de la taille de la cellule**
 acell=10.0 ; submit.sh --jobname acell{acell} --cmd "./QE.sh --type atom --celldm ${acell} --nkpt 10 --pp Co.pbe-spn-kjpaw_psl.0.3.1.UPF --wfccutoff 70.0 --ratiorhowfc 10.0 --elt Co --ibrav 1"
 
 ## Analyse des fichiers de sortie
