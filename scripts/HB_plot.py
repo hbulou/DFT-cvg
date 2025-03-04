@@ -13,11 +13,14 @@ import argparse
 
 from sklearn import linear_model
 
-a_exp=   {'Ir': 3.84,'Pd': 3.89,'Rh': 3.80}
-Ecoh_exp={'Ir':-6.94,'Pd':-3.89,'Rh':-5.75}
+a_exp=   {'Ir': 3.84,'Pd': 3.89,'Rh': 3.80,'Ru': 3.83}  # NOTE Ru fcc
+Ecoh_exp={'Ir':-6.94,'Pd':-3.89,'Rh':-5.75,'Ru': -6.74} # NOTE Ru fcc
 
 ##############################################################################################
 def plot_cell(data,args):
+    print("##########################################################################")
+    print("#                    plot_cell ")
+    print("##########################################################################")
     fig, ax = pyplot.subplots()
     fig.subplots_adjust(wspace=0, top=0.95, bottom=0.1, left=0.2, right=0.95)
 
@@ -42,7 +45,9 @@ def plot_cell(data,args):
             & (data['nrj']<0.0)          
             & (data['nkpt']==args.nkpt) 
         ].sort_values(by=['latt_param'])
-        #print(data3.head)
+        print("args.degauss=",args.degauss)
+        print(data3.head)
+        print(data3.size)
         #print(data3.tail)
         #exit()
         ref=data3['nrj'].iloc[-1]
