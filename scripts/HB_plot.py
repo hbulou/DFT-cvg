@@ -13,8 +13,8 @@ import argparse
 
 from sklearn import linear_model
 
-a_exp={'Pd':3.89}
-Ecoh_exp={'Pd':-3.89}
+a_exp=   {'Ir': 3.84,'Pd': 3.89,'Rh': 3.80}
+Ecoh_exp={'Ir':-6.94,'Pd':-3.89,'Rh':-5.75}
 
 ##############################################################################################
 def plot_cell(data,args):
@@ -53,10 +53,10 @@ def plot_cell(data,args):
                                                  latt_param,
                                                  latt_param/numpy.sqrt(2.0),
                                                  ppfile))
-        print("Exp Ecoh= %f (%10.2f ) eV at a0_exp=%f (%10.2f) "%(Ecoh_exp['Pd'],
-                                                                  100*(new_nrj.min()-Ecoh_exp['Pd'])/Ecoh_exp['Pd'],
-                                                                  a_exp['Pd'],
-                                                                  100*(latt_param-a_exp['Pd'])/a_exp['Pd'],
+        print("Exp Ecoh= %f (%10.2f ) eV at a0_exp=%f (%10.2f) "%(Ecoh_exp[args.elt],
+                                                                  100*(new_nrj.min()-Ecoh_exp[args.elt])/Ecoh_exp[args.elt],
+                                                                  a_exp[args.elt],
+                                                                  100*(latt_param-a_exp[args.elt])/a_exp[args.elt],
                                                                   ))
         
         
@@ -244,6 +244,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--data'   ,nargs='+')  # nargs='*' if you want to support the ability to have an empty list.
     parser.add_argument('--cell'   ,nargs='?',default=10.0,type=float)
+    parser.add_argument('--elt'   ,nargs='?',default='Pd',type=str)
     parser.add_argument('--ratio'  ,nargs='?',default=10.0,type=float)
     parser.add_argument('--ke'     ,nargs='?',default=90.0,type=float)
     parser.add_argument('--natom'  ,nargs='?',default=1,type=int)

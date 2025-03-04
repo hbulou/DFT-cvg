@@ -55,6 +55,46 @@ nrel=1
 INPUTFILE="gen_PP.in"
 OUTPUTFILE="gen_PP.out"
 
+if [ ${elt} == "Rhtry" ] ; then
+    Z=45.
+    rcore=2.0
+    n4s=2.0
+    n4p=6.0
+    n4d=8.0
+    n5s=1.0
+    n5p=0.0
+    cat > $INPUTFILE <<EOF
+ &input
+   title='Rh',
+   zed=$Z,
+   rel=$nrel,
+   config='[Kr] 4d${n4d} 5s${n5s} 5p${n5p}',
+   iswitch=3,
+   dft='$fct'
+ /
+ &inputp
+   lpaw=.true.,
+   pseudotype=3,
+   file_pseudopw='${pp_filename}',
+   author='HB',
+   lloc=-1,
+   rcloc=1.9,
+   which_augfun='PSQ',
+   rmatch_augfun_nc=.true.,
+   nlcc=.true.,
+   new_core_ps=.true.,
+   rcore=${rcore},
+   tm=.true.
+ /
+6
+4S  1  0  ${n4s}  0.00  0.90  2.30  0.0
+5S  2  0  ${n5s}  0.00  0.90  1.30  0.0
+4P  2  1  ${n4p}  0.00  0.90  1.70  0.0
+5P  3  1  ${n5p}  0.00  0.90  1.70  0.0
+4D  3  2  ${n4d}  0.00  0.90  1.90  0.0
+4D  3  2 -2.00    0.30  0.90  1.90  0.0
+EOF
+fi
 if [ ${elt} == "Rh" ] ; then
     Z=45.
     n4s=2.0
@@ -99,9 +139,13 @@ if [ ${elt} == "Pd" ] ; then
     rcore=2.0
     n4s=2.0
     n4p=6.0
-    n4d=9.0
-    n5s=1.0
+    n4d=8.0
+    n5s=2.0
     n5p=0.0
+    nrel=1
+    fcp='PBE'
+    rloc=2.2
+    rmatch_augfun=1.8
     cat > $INPUTFILE <<EOF
  &input
    title='${elt}',
@@ -117,21 +161,31 @@ if [ ${elt} == "Pd" ] ; then
    file_pseudopw='${pp_filename}',
    author='HB',
    lloc=-1,
-   rcloc=1.9,
+   rcloc=${rloc},
    which_augfun='PSQ',
-   rmatch_augfun_nc=.true.,
+   rmatch_augfun=${rmatch_augfun},
    nlcc=.true.,
-   new_core_ps=.true.,
-   rcore=${rcore},
    tm=.true.
+   lgipaw_reconstruction=.true.
+   use_paw_as_gipaw=.true
+   !rmatch_augfun_nc=.true.,
+   !new_core_ps=.true.,
+   !rcore=${rcore},
  /
 6
-4S  1  0  ${n4s}  0.00  0.90  2.30  0.0
-5S  2  0  ${n5s}  0.00  0.90  1.30  0.0
-4P  2  1  ${n4p}  0.00  0.90  1.70  0.0
-5P  3  1  ${n5p}  0.00  0.90  1.70  0.0
-4D  3  2  ${n4d}  0.00  0.90  1.90  0.0
-4D  3  2 -2.00    0.30  0.90  1.90  0.0
+5S  1  0  ${n5s}  0.00  2.10  2.30  0.0
+5S  1  0  0.00    2.00  2.10  2.30  0.0
+5P  2  1  ${n5p}  0.00  2.20  2.60  0.0
+5P  2  1  0.00    6.30  2.20  2.60  0.0
+4D  3  2  ${n4d}  0.00  1.70  1.90  0.0
+4D  3  2  0.00    4.30  1.70  1.90  0.0
+!6
+!4S  1  0  ${n4s}  0.00  0.90  2.30  0.0
+!5S  2  0  ${n5s}  0.00  0.90  1.30  0.0
+!4P  2  1  ${n4p}  0.00  0.90  1.70  0.0
+!5P  3  1  ${n5p}  0.00  0.90  1.70  0.0
+!4D  3  2  ${n4d}  0.00  0.90  1.90  0.0
+!4D  3  2 -2.00    0.30  0.90  1.90  0.0
 EOF
 fi
 
