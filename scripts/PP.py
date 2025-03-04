@@ -21,7 +21,6 @@ def read_upf(filename):
     text=f.readlines()
     f.close()
 
-<<<<<<< HEAD
     input_data = {}
     data_beta = {}
     i=0
@@ -52,11 +51,6 @@ def read_upf(filename):
                 if "rmax=" in field:
                     input_data["rmax"]=float(field.split("=")[1].replace('"','').replace('>',''))
                     print("# rmax= %f"%(input_data["rmax"]))
-=======
-    data=read_data(args.prefix+".wfc")
-    dataps=read_data(args.prefix+"ps.wfc")
-    fig, ax = pyplot.subplots()
->>>>>>> 17f6041f3c06b244eab7576bbda72c95c490f655
 
         if "<PP_R>" in line:
             while "</PP_R>" not in line:
@@ -181,11 +175,6 @@ if __name__ == "__main__":
     parser.add_argument('--list'   ,nargs='+')  # nargs='*' if you want to support the ability to have an empty list.
     parser.add_argument('--xmax'   ,nargs='?',type=float,default=20.0)
     parser.add_argument('--rcut'   ,nargs='+')
-<<<<<<< HEAD
-=======
-    parser.add_argument('--xmax'   ,nargs='?',type=float,default=20.0)
-    parser.add_argument('--prefix', nargs='?',default='ld1')
->>>>>>> 17f6041f3c06b244eab7576bbda72c95c490f655
     args = parser.parse_args()
     main(args)
 
