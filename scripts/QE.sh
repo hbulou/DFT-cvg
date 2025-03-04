@@ -1,17 +1,17 @@
 #!/bin/bash
-#SBATCH -p grant -A g2024a258c
-#SBATCH -N 1-4
-#SBATCH -n 16
-##SBATCH -t 1-00:00:00     
-#SBATCH -t 1-00:00:00     
-##SBATCH --mem=32768
-##SBATCH --mem=65536
-##SBATCH --mem=8192
-##SBATCH --mem=4096
-# QE 6.1
+#SBATCH --account=pcm7459
+#SBATCH --constraint=GENOA
+#SBATCH --nodes=1
+#SBATCH --exclusive
+#SBATCH --time=2:00:00
+
+###SBATCH -N 1-4
+###SBATCH -n 16
+####SBATCH -t 1-00:00:00     
 
 
-
+PPDIR="/lus/home/CT9/pcm7459/hbulou/pseudo"
+PPDIR="./"
 
 ############################################################
 # Help                                                     #
@@ -34,6 +34,8 @@ Help()
    echo "ratiorhowfc     (default 10)"
    echo "type            atom|crystal (default crystal)"
    echo "wfccutoff       (default 100.00 Ry)"
+   echo "mag"
+   echo "degauss(Ry)      (default 0.01 Ry)"
    echo
 }
 ############################################################                                                                                                                                                                                 
@@ -45,6 +47,18 @@ set_Mass()
     case ${elt} in
         "H")
             mass=1.007976
+            ;;
+        "Ti")
+            mass=47.867
+            ;;
+        "Co")
+            mass=58.933200
+            ;;
+	"Ni")
+	    mass=58.6934
+	    ;;
+        "Ru")
+            mass=101.07
             ;;
         "Pd")
             mass=106.42
@@ -61,6 +75,9 @@ set_Mass()
         "Pt")
             mass=195.078
             ;;
+        "Au")
+            mass=196.966552
+            ;;
 
         *)
             echo "Element not found"
@@ -76,7 +93,7 @@ PseudoPotential_chk()
     # defini le repertoire ou sont stockes les pseudopotentiels                                                                                                                                                                              
     #PPDIR='/usr/local/share/pseudo'
     #    PPDIR='/home/bulou/pseudo'
-    PPDIR='/home2020/home/ipcms/bulou/workdir/pseudo'
+    #PPDIR='/home2020/home/ipcms/bulou/workdir/pseudo'
     PPDIRPREV=${PPDIR}
     echo "##################################################################"
     echo ${pp_file}
@@ -140,7 +157,7 @@ type="crystal"
 celldm1=7.5
 wfccutoff=50.00
 beta=0.7
-k=10
+nkpt=10
 pp_file=Pd.pbe-n-kjpaw_psl.1.0.0.UPF
 ratiorhowfccutoff=10
 mass=106.42
@@ -152,6 +169,9 @@ celldm3oncelldm1=1.0
 dmol=1.0
 totcharge=0.0
 RUNNAME='rundir'
+mag="no"
+degauss=0.01
+delrundir="no"
 # IBRAV
 # ibra=1          cubic P (sc)
 #      v1 = a(1,0,0),  v2 = a(0,1,0),  v3 = a(0,0,1)
@@ -183,6 +203,9 @@ ARGUMENT_LIST=(
     "dmol"
     "totcharge"
     "runname"
+    "mag"
+    "degauss"
+    "delrundir"
 )
 # read arguments
 opts=$(getopt \
@@ -225,7 +248,7 @@ while [[ $# -gt 0 ]]; do
             shift 2
 	    ;;
 	--nkpt)
-	    k=$2
+	    nkpt=$2
             shift 2
 	    ;;
 	--dmol)
@@ -234,6 +257,10 @@ while [[ $# -gt 0 ]]; do
 	    ;;
 	--totcharge)
 	    totcharge=$2
+            shift 2
+	    ;;
+	--delrundir)
+	    delrundir=$2
             shift 2
 	    ;;
 	--pp)
@@ -252,6 +279,14 @@ while [[ $# -gt 0 ]]; do
 	    type=$2
 	    shift 2
 	    ;;
+	--mag)
+	    mag=$2
+	    shift 2
+	    ;;
+	--degauss)
+	    degauss=$2
+	    shift 2
+	    ;;
 	--wfccutoff)
 	    wfccutoff=$2
             shift 2
@@ -262,8 +297,22 @@ while [[ $# -gt 0 ]]; do
 done
 
 
-module load intel/intel17 openmpi/openmpi-2.0.2.i17 scalapack/scalapack.i17 fftw/fftw3.3.6.i17
-module load quantumespresso/espresso-6.1
+
+
+module purge
+
+module load develop GCC-CPU-3.1.0
+module load quantum-espresso
+
+module list
+
+# export OMP_DISPLAY_AFFINITY=TRUE
+export OMP_PROC_BIND=CLOSE
+export OMP_PLACES=THREADS
+
+export OMP_NUM_THREADS=1
+
+
 CMD="pw.x"
 
 PseudoPotential_chk
@@ -322,6 +371,7 @@ cat >> ${RUNNAME}.in <<EOF
     celldm(3) =${celldm3oncelldm1}
 EOF
 fi
+
 cat >> ${RUNNAME}.in <<EOF
     nat=${natom}
     ntyp=${ntyp},
@@ -329,11 +379,20 @@ cat >> ${RUNNAME}.in <<EOF
     ecutrho=${rhocutoff}
     occupations = 'smearing'
     !  smearing = 'm-p'
-    degauss = 0.003 ,
+    degauss = ${degauss} ,
     ! tot_charge=1.0,
     !nbnd=20
     tot_charge=${totcharge}
-/
+EOF
+
+if [ $mag == "yes" ] ; then
+    cat >> ${RUNNAME}.in <<EOF
+    starting_magnetization(1)=0.0
+EOF
+fi
+
+cat >> ${RUNNAME}.in <<EOF
+    /
 &electrons
      mixing_mode='plain',
      mixing_beta=0.7,
@@ -359,7 +418,7 @@ ATOMIC_POSITIONS (alat)
   ${elt} 0.5 0.5 0.0 0 0 0
   ${elt} 0.0 0.5 ${z} 0 0 0
 K_POINTS (automatic)
-  ${k} ${k} ${k} 1 1 1
+  ${nkpt} ${nkpt} ${nkpt} 1 1 1
 
 EOF
 fi
@@ -369,7 +428,7 @@ ATOMIC_POSITIONS (angstrom)
   ${elt} 0.0 0.0 0.0 0 0 0
   ${elt} ${dmol} 0.0 0.0 0 0 0
 K_POINTS (automatic)
-  ${k} ${k} ${k} 1 1 1
+  ${nkpt} ${nkpt} ${nkpt} 1 1 1
 
 EOF
 fi
@@ -379,13 +438,19 @@ if [ $type == "atom" ] ; then
 ATOMIC_POSITIONS (alat)
   ${elt} 0.0 0.0 0.0 0 0 0
 K_POINTS (automatic)
-  ${k} ${k} ${k} 1 1 1
+  ${nkpt} ${nkpt} ${nkpt} 1 1 1
 
 EOF
 fi
 
+echo "##########################################################"
+cat ${RUNNAME}.in
+echo "##########################################################"
 
+srun --ntasks-per-node=192 --cpus-per-task="${OMP_NUM_THREADS}" --threads-per-core=1 --label  -- $CMD < ${RUNNAME}.in | tee ${RUNNAME}.out
 
-
-mpirun $CMD < ${RUNNAME}.in | tee ${RUNNAME}.out
+if [ $delrundir == "yes" ] ; then
+    cd ..
+    rm -rf ${RUNNAME}
+fi
 

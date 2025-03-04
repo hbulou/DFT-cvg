@@ -21,8 +21,8 @@ def read_data(filename):
     return data
 def main(args):
 
-    data=read_data("ld1.wfc")
-    dataps=read_data("ld1ps.wfc")
+    data=read_data(args.prefix+".wfc")
+    dataps=read_data(args.prefix+"ps.wfc")
     fig, ax = pyplot.subplots()
 
 
@@ -46,7 +46,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--idx'   ,nargs='+')  # nargs='*' if you want to support the ability to have an empty list.
     parser.add_argument('--rcut'   ,nargs='+')
-    parser.add_argument('--xmax'   ,nargs='?',type=float,default=20.0)  
+    parser.add_argument('--xmax'   ,nargs='?',type=float,default=20.0)
+    parser.add_argument('--prefix', nargs='?',default='ld1')
     args = parser.parse_args()
     main(args)
 
